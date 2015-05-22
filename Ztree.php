@@ -70,6 +70,7 @@ class ZTree extends \yii\base\Widget
         $view = $this->getView();
         $zNodes=$this->json==false?Json::encode($this->nodes):$this->nodes;
         $settings=Json::encode($this->settings);
+        $settings = preg_replace('/(\{"+)(before|on|addDiy|addHover|removeHover)([a-zA-Z]+)(":"+)([a-zA-Z.\s\'{}()*+-?^$|]+)("\}{1})/i','${1}$2$3":$5}',$settings);
         $js ="$.fn.zTree.init($('#$this->id'), $settings, $zNodes)";
         $view->registerJs($js);
     }
